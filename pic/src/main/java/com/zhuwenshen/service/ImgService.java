@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,8 +18,11 @@ import com.zhuwenshen.utils.MySid;
 public class ImgService {
 	final static Logger log = LoggerFactory.getLogger(ImgService.class);
 	
-	private static String PREFIX = "static/img/";
-	private static String TMP = "tmp/";
+	@Value("${uploadimg.prefix}")
+	private  String prefix ;
+	
+	@Value("${uploadimg.tmp}")
+	private  String tmp;
 
 	public JsonResult save(MultipartFile file) {
 
@@ -27,8 +31,8 @@ public class ImgService {
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         String newFileName = "";
 		try {
-			FileUtil.uploadFile(file.getBytes(), PREFIX+TMP, sid+suffix);
-			fileName = PREFIX+TMP+sid+suffix;
+			FileUtil.uploadFile(file.getBytes(), prefix+tmp, sid+suffix);
+			fileName = prefix+tmp+sid+suffix;
 			File temp = new File(fileName);			
 			log.info("插入的临时文件路径为"+temp.getAbsolutePath());
 			newFileName = getRandomFilePath()+sid+suffix;
@@ -62,9 +66,9 @@ public class ImgService {
 		return JsonResult.ok(newFileName);
 	}
 
-	public static String getRandomFilePath() {
+	public  String getRandomFilePath() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(PREFIX).append(getRandomInt()).append('/').append(getRandomInt()).append('/');
+		sb.append(prefix).append(getRandomInt()).append('/').append(getRandomInt()).append('/');
 		File targetFile = new File(sb.toString());
 		System.out.println(targetFile.getAbsolutePath());
 		if (!targetFile.exists()) {

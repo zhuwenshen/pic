@@ -20,14 +20,14 @@ public class UploadPicController {
 	ImgService imgService;
 
 	//跳转到上传文件的页面
-    @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
+    @RequestMapping(value="/uploadimg", method = RequestMethod.GET)
     public String goUploadImg() {
         //跳转到 templates 目录下的 uploadimg.html
         return "uploadimg";
     }
 
     //处理文件上传
-    @RequestMapping(value="/uploadImg", method = RequestMethod.POST)
+    @RequestMapping(value="/uploadimg", method = RequestMethod.POST)
     @ResponseBody
     public  JsonResult uploadImg(@RequestParam("file") MultipartFile file,
             HttpServletRequest request) {       
