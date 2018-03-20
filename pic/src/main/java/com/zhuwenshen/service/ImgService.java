@@ -18,7 +18,7 @@ public class ImgService {
 	final static Logger log = LoggerFactory.getLogger(ImgService.class);
 	
 	private static String PREFIX = "static/img/";
-	private static String TMP = "static/tmp/";
+	private static String TMP = "tmp/";
 
 	public JsonResult save(MultipartFile file) {
 
