@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>9</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +35,22 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- 添加thymeleaf -->
+        <dependency>  
+         <groupId>org.springframework.boot</groupId>  
+         <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+        </dependency>
+        <dependency>
+        	<groupId>net.coobird</groupId>
+        	<artifactId>thumbnailator</artifactId>
+        	<version>0.4.8</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.github.bingoohuang</groupId>
+        	<artifactId>idworker-client</artifactId>
+        	<version>1.5</version>
+        </dependency>
 	</dependencies>
 
 	<build>
