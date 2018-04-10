@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.zhuwenshen.model.custom.JsonResult;
 import com.zhuwenshen.utils.FileUtil;
 import com.zhuwenshen.utils.ImgUtil;
 import com.zhuwenshen.utils.MySid;
@@ -23,9 +22,12 @@ public class ImgService {
 	
 	@Value("${uploadimg.tmp}")
 	private  String tmp;
+	
+	@Value("${uploadimg.appPath}")
+	private String appPath;	
 
-	public JsonResult save(MultipartFile file) {
-
+	
+	public String save(MultipartFile file) throws Exception {
 		String sid = MySid.nextLong();	
 		String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."));
@@ -47,7 +49,7 @@ public class ImgService {
 				}
 			}			
 			
-			ImgUtil.saveImg(new File(fileName), newFileName);
+			ImgUtil.saveImg(new File(fileName), prefix+newFileName);
 			log.info("最后的路径为"+newFileName);
 			temp.delete();
 
@@ -55,21 +57,21 @@ public class ImgService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error("上传失败");
-			return JsonResult.fail("上传失败");
+			throw e;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error("上传失败");
-			return JsonResult.fail("上传失败");
+			throw e;
 		}
 		log.info("上传成功");
-		return JsonResult.ok(newFileName);
+		return appPath+newFileName;		
 	}
-
+	
 	public  String getRandomFilePath() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(prefix).append(getRandomInt()).append('/').append(getRandomInt()).append('/');
-		File targetFile = new File(sb.toString());
+		sb.append(getRandomInt()).append('/').append(getRandomInt()).append('/');
+		File targetFile = new File(prefix+sb.toString());
 		System.out.println(targetFile.getAbsolutePath());
 		if (!targetFile.exists()) {
 			targetFile.mkdirs();
