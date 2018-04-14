@@ -14,6 +14,20 @@ public class ImgUtil {
 		Thumbnails.of(pic).scale(1f).toFile(outFilepath);
 	}
 	
+	/*
+	 * 缩放为300*300
+	 */
+	public static void saveImgScale(File pic, String outFilepath, Integer x, Integer y) throws IOException {
+		if(x == null || x.equals(0)) {
+			x = 300;
+		}
+		
+		if(y == null || y.equals(0)) {
+			y = 300;
+		}
+		
+		Thumbnails.of(pic).forceSize(x,y).toFile(outFilepath);
+	}
 	
 	
 	public static Builder<File> toBuilder(File pic) {
